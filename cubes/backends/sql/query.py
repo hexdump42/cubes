@@ -91,6 +91,7 @@ class SnowflakeSchema(object):
         self.mapper = mapper
         self.metadata = metadata
         self.safe_labels = safe_labels
+        self.label_counter = 0
 
         # Initialize the shema information: tables, column maps, ...
         self.schema = self.mapper.schema
@@ -177,7 +178,7 @@ class SnowflakeSchema(object):
         self.tables[table.key] = table
 
         # Collect all the detail tables
-        # 
+        #
         for join in self.mapper.joins:
             # just ask for the table
 
@@ -198,7 +199,7 @@ class SnowflakeSchema(object):
             self.tables[table.key] = table
 
         # Collect detail keys:
-        # 
+        #
         # Every table object has a set of keys `detail_keys` which are
         # columns that are used to join detail tables.
         #
@@ -427,7 +428,7 @@ class SnowflakeSchema(object):
         # 1. find the column
         # 2. construct the condition
         # 3. use the appropriate SQL JOIN
-        # 
+        #
         for join in joins:
             # Prepare the table keys:
             # Key is a tuple of (schema, table) and is used to get a joined
@@ -857,9 +858,9 @@ class QueryBuilder(object):
         # 13 xx xx -- xx | composed
         # 14 -- xx xx xx | composed
         # 15 xx xx xx xx | composed
-        # 
+        #
 
-        # The master cut is in conflict with detail drilldown or detail cut 
+        # The master cut is in conflict with detail drilldown or detail cut
         if master.cut_attributes and (detail.attributes or
                                         detail.cut_attributes):
             simple_method = False
